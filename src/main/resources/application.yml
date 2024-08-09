@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: springboard
+  profiles:
+    include:
+      - local
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
