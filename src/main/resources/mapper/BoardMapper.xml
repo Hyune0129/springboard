@@ -6,9 +6,13 @@
         <result property="title" column="title" />
         <result property="time" column="time" />
         <result property="writer" column="writer" />
-        <!-- <result property="description" column="description" /> -->
+        <result property="description" column="description" />
     </resultMap>
 
     <select id="getBoards" resultMap="boardResultMap"> select bid, board.title as title, time,
         user.name as writer from board left join user on board.writer = user.uid </select>
+
+    <select id="getBoardById"> select board.title as title, time, user.name as writer, description
+        from board left join user on board.writer = user.uid where bid = #{bid} </select>
+
 </mapper>
