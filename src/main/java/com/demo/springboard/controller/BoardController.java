@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.demo.springboard.BoardDTO;
 import com.demo.springboard.service.BoardService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/")
 public class BoardController {
@@ -21,9 +24,13 @@ public class BoardController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest httpServletRequest) {
         List<BoardDTO> boards = boardService.getBoards();
         model.addAttribute("boards", boards);
+        HttpSession session = httpServletRequest.getSession();
+        if (session.getAttribute("user") != null) {
+            model.addAttribute(session.getAttribute("user"));
+        }
         return "index";
     }
 }

@@ -7,6 +7,16 @@
     <title>board index</title>
   </head>
   <body>
+    <c:choose>
+      <c:when test="${user != null}">
+        WelCome ${user.name}!
+        <a href="/user/logout">[logout]</a>
+        <hr>
+      </c:when>
+      <c:otherwise>
+        <a href="/user/login">[login]</a>
+      </c:otherwise>
+    </c:choose>
     <table border="1">
       <tr>
         <th>title</th>

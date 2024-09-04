@@ -1,0 +1,10 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.springboard.mapper.UserMapper">
+    <select id="getUserById" resultType="com.demo.springboard.UserDTO"> select uid, id, name,
+        password from `user` where id = #{id}</select>
+
+    <insert id="insertUser"> insert into `user`(id, name, password) values(#{user.id}, #{user.name},
+        #{user.password}); </insert>
+
+
+</mapper>
