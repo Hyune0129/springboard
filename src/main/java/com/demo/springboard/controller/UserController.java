@@ -38,13 +38,55 @@ public class UserController {
         }
         UserDTO user = userService.getUserById(id);
 
-        Map<String, Boolean> validateErrors = userService.getValidateError(password, user);
+        final Map<String, Boolean> validateErrors = userService.getValidateError(password, user);
         if (!validateErrors.isEmpty()) { // login failed -
             model.addAttribute("errors", validateErrors);
             return "signin";
         }
         httpServletRequest.getSession().setAttribute("user", user);
         return "redirect:/";
+    }
+
+    @GetMapping("/register")
+    public String getRegisterPage() {
+        return "signup";
+    }
+
+    @PostMapping("/register")
+    public String tryRegister(final String id, final String password, final String confirm,
+            final String name, Model model) {
+        final Map<String, Boolean> blankErrors = userService.getBlankError(id, password, name);
+        final UserDTO user = UserDTO.builder().id(id).password(password).name(name).build();
+        if (!blankErrors.isEmpty()) { // register failed - not input
+            model.addAttribute("errors", blankErrors);
+            model.addAttribute("user", user);
+            model.addAttribute("confirm", confirm);
+            return "signup";
+        }
+        if (!password.equals(confirm)) {
+            model.addAttribute("errors", Map.of("isNotMatch", true));
+            model.addAttribute("user", user);
+            model.addAttribute("confirm", confirm);
+            return "signup";
+        }
+
+        final Map<String, Boolean> validateErrors = userService.getRegisterValidateError(user);
+        if (!validateErrors.isEmpty()) { // register failed
+            model.addAttribute("errors", validateErrors);
+            model.addAttribute("user", user);
+            model.addAttribute("confirm", confirm);
+            return "signup";
+        }
+
+        final Map<String, Boolean> duplicateErrors = userService.getDuplicateError(user);
+        if (!duplicateErrors.isEmpty()) { // register failed - duplicate
+            model.addAttribute("errors", duplicateErrors);
+            model.addAttribute("user", user);
+            model.addAttribute("confirm", confirm);
+            return "signup";
+        }
+        userService.register(user);
+        return "signin";
     }
 
 }

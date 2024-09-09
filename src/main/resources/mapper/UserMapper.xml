@@ -3,8 +3,14 @@
     <select id="getUserById" resultType="com.demo.springboard.UserDTO"> select uid, id, name,
         password from `user` where id = #{id}</select>
 
-    <insert id="insertUser"> insert into `user`(id, name, password) values(#{user.id}, #{user.name},
-        #{user.password}); </insert>
+    <insert id="insertUser" parameterType="com.demo.springboard.UserDTO"> insert into `user`(id,
+        name, password) values(#{id}, #{name}, #{password}); </insert>
+
+    <select id="isExistName" resultType="boolean"> SELECT IF(COUNT(*) = 1, 1, 0) FROM `user` WHERE
+        name = #{name}; </select>
+
+    <select id="isExistId" resultType="boolean"> SELECT IF(COUNT(*) = 1, 1, 0) FROM `user` WHERE id
+        = #{id}; </select>
 
 
 </mapper>
