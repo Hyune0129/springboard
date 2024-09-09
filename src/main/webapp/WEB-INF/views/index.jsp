@@ -31,5 +31,6 @@
           </tr>
         </c:forEach>
     </table>
+    <a href="/user/register">[signup]</a>
   </body>
 </html>

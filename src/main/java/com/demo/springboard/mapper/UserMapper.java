@@ -9,4 +9,10 @@ import com.demo.springboard.UserDTO;
 @Repository
 public interface UserMapper {
     UserDTO getUserById(String id);
+
+    boolean isExistName(String name);
+
+    boolean isExistId(String id);
+
+    void insertUser(UserDTO user);
 }
