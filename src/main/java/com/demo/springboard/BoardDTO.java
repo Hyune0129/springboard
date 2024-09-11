@@ -1,12 +1,18 @@
 package com.demo.springboard;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardDTO {
-    int bid;
-    String title;
-    String time;
-    String writer;
-    String description;
+    private int bid;
+    private String title;
+    private String time;
+    private String writer;
+    private String description;
 }

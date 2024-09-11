@@ -11,10 +11,12 @@
       <c:when test="${user != null}">
         WelCome ${user.name}!
         <a href="/user/logout">[logout]</a>
+        <a href="/board/write">[write]</a>
         <hr>
       </c:when>
       <c:otherwise>
         <a href="/user/login">[login]</a>
+        <a href="/user/register">[signup]</a>
       </c:otherwise>
     </c:choose>
     <table border="1">
@@ -31,6 +33,5 @@
           </tr>
         </c:forEach>
     </table>
-    <a href="/user/register">[signup]</a>
   </body>
 </html>

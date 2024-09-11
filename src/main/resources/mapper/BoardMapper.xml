@@ -6,7 +6,7 @@
         <result property="title" column="title" />
         <result property="time" column="time" />
         <result property="writer" column="writer" />
-        <result property="description" column="description" />
+        <!-- <result property="description" column="description" /> -->
     </resultMap>
 
     <select id="getBoards" resultMap="boardResultMap"> select bid, board.title as title, time,
