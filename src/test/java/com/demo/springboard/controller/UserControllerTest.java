@@ -9,9 +9,11 @@ import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.demo.springboard.UserDTO;
@@ -49,8 +51,8 @@ class UserControllerTest {
                 when(userService.getValidateError(password, user)).thenReturn(errors);
 
                 mockMvc.perform(MockMvcRequestBuilders.post("/user/login").param("id", id)
-                                .param("password", password))
-                                .andExpect(status().is3xxRedirection());
+                                .param("password", password)).andExpect(status().is3xxRedirection())
+                                .andExpect(redirectedUrl("/"));
                 // redirect to login page
 
         }
@@ -80,4 +82,11 @@ class UserControllerTest {
                                 .param("name", name)).andExpect(status().is2xxSuccessful());
         }
 
+        @Test
+        void logout() throws Exception {
+                MockHttpSession mockHttpSession = new MockHttpSession();
+                mockMvc.perform(get("/user/logout").session(mockHttpSession))
+                                .andExpect(status().is3xxRedirection())
+                                .andExpect(redirectedUrl("/"));
+        }
 }
