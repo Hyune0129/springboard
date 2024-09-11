@@ -19,4 +19,8 @@ public class BoardService {
     public List<BoardDTO> getBoards() {
         return boardMapper.getBoards();
     }
+
+    public BoardDTO getBoardById(Long bid) {
+        return boardMapper.getBoardById(bid);
+    }
 }

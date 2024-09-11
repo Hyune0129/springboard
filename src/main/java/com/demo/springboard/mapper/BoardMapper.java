@@ -12,4 +12,6 @@ import com.demo.springboard.BoardDTO;
 public interface BoardMapper {
 
     List<BoardDTO> getBoards();
+
+    BoardDTO getBoardById(Long bid);
 }

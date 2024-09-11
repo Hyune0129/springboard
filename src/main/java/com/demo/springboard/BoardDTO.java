@@ -8,5 +8,5 @@ public class BoardDTO {
     String title;
     String time;
     String writer;
-    // String description;
+    String description;
 }
