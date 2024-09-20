@@ -39,7 +39,7 @@ class UserControllerTest {
         void login() throws Exception {
                 final String id = "testid";
                 final String password = "testpassword";
-                final int uid = 1;
+                final long uid = 1;
                 final String name = "test";
                 Map<String, Boolean> errors = new HashMap<>();
 

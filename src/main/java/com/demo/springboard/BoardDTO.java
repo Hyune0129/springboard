@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardDTO {
-    private int bid;
+    private Long bid;
     private String title;
     private String time;
     private String writer;

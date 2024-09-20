@@ -2,11 +2,11 @@ package com.demo.springboard.service;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.stereotype.Service;
 import com.demo.springboard.UserDTO;
 import com.demo.springboard.mapper.UserMapper;
 import com.demo.springboard.util.UserValidator;
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class UserService {
@@ -83,6 +83,8 @@ public class UserService {
         return errors;
     }
 
-
+    public boolean hasSession(HttpSession httpSession) {
+        return httpSession.getAttribute("user") != null;
+    }
 
 }

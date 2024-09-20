@@ -11,7 +11,7 @@
       <c:when test="${user != null}">
         WelCome ${user.name}!
         <a href="/user/logout">[logout]</a>
-        <a href="/board/write">[write]</a>
+        <a href="/board/create">[write]</a>
         <hr>
       </c:when>
       <c:otherwise>

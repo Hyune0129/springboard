@@ -24,8 +24,8 @@ public class BoardServiceTest {
 
     @Test
     void getBoardsTest() {
-        BoardDTO testBoard1 = BoardDTO.builder().bid(1).title("test").time("2024-01-01").build();
-        BoardDTO testBoard2 = BoardDTO.builder().bid(2).title("test").time("2024-01-01").build();
+        BoardDTO testBoard1 = BoardDTO.builder().bid(1L).title("test").time("2024-01-01").build();
+        BoardDTO testBoard2 = BoardDTO.builder().bid(2L).title("test").time("2024-01-01").build();
         when(boardMapper.getBoards()).thenReturn(Arrays.asList(testBoard1, testBoard2));
         List<BoardDTO> boards = boardService.getBoards();
         assertEquals(testBoard1, boards.get(0));
@@ -34,7 +34,7 @@ public class BoardServiceTest {
 
     @Test
     void getBoardByIdTest() {
-        BoardDTO testBoard = BoardDTO.builder().bid(1).title("test").time("2024-01-01").build();
+        BoardDTO testBoard = BoardDTO.builder().bid(1L).title("test").time("2024-01-01").build();
         when(boardMapper.getBoardById(1L)).thenReturn(testBoard);
 
         BoardDTO boardDTO = boardService.getBoardById(1L);
