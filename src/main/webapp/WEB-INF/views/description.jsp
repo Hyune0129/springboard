@@ -18,6 +18,15 @@
         <tr>
         <td colspan = "2"><textarea name="" id="" cols="30" readonly>${board.description}</textarea></td>
         </tr>
+        <tr>
+            <td colspan="2"><a href="/">[index]</a></td>
+        </tr>
+        <c:if test="${isWriter}">
+            <tr>
+                <td><a href="/board/update/${board.bid}">[update]</a></td>
+                <td><a href="/board/delete/${board.bid}">[delete]</a></td>
+            </tr>
+        </c:if>
     </table>
 </body>
 </html>

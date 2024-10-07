@@ -1,5 +1,6 @@
 package com.demo.springboard.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
@@ -97,5 +98,30 @@ public class BoardMapperTest {
 
         boards = boardMapper.getBoards();
         assertTrue(prevSize + 1 == boards.size());
+    }
+
+    @Test
+    @Order(4)
+    void updateBoardTesr() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("writer", testUser.getUid());
+        map.put("title", "testTitle1");
+        map.put("description", "boardTestDescription1");
+        boardMapper.insertBoard(map);
+        List<BoardDTO> boards = boardMapper.getBoards();
+        BoardDTO testBoard = null;
+        for (BoardDTO board : boards) {
+            if (board.getWriter().equals(testUser.getName())) { // dont get description
+                testBoard = boardMapper.getBoardById(board.getBid());
+                break;
+            }
+        }
+        assertNotNull(testBoard);
+        testBoard.setTitle("changedTitle");
+        testBoard.setDescription("changedDescription");
+        boardMapper.updateBoard(testBoard);
+        BoardDTO changedBoard = boardMapper.getBoardById(testBoard.getBid());
+        assertEquals("changedDescription", changedBoard.getDescription());
+        assertEquals("changedTitle", changedBoard.getTitle());
     }
 }

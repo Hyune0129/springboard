@@ -12,10 +12,12 @@
     <select id="getBoards" resultMap="boardResultMap"> select bid, board.title as title, time,
         user.name as writer from board left join user on board.writer = user.uid </select>
 
-    <select id="getBoardById"> select board.title as title, time, user.name as writer, description
-        from board left join user on board.writer = user.uid where bid = #{bid} </select>
+    <select id="getBoardById"> select bid, board.title as title, time, user.name as writer,
+        description from board left join user on board.writer = user.uid where bid = #{bid} </select>
 
     <insert id="insertBoard" parameterType="hashmap"> insert into board(title, writer, description)
         values(#{title}, #{writer}, #{description}) </insert>
+    <update id="updateBoard" parameterType="com.demo.springboard.BoardDTO"> update board set title =
+        #{title}, description = #{description} where bid = #{bid}</update>
 
 </mapper>

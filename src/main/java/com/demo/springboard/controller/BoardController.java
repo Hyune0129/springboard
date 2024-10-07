@@ -41,9 +41,15 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String getDescription(@PathVariable("id") Long id, Model model) {
+    public String getDescription(@PathVariable("id") Long id, Model model,
+            HttpServletRequest httpServletRequest) {
         BoardDTO board = boardService.getBoardById(id);
         model.addAttribute("board", board);
+        HttpSession session = httpServletRequest.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (boardService.isWriter(board, user)) {
+            model.addAttribute("isWriter", true);
+        }
         return "description";
     }
 
@@ -72,8 +78,7 @@ public class BoardController {
         Map<String, Boolean> blankErrors = boardService.getBlankError(board);
         if (!blankErrors.isEmpty()) {
             model.addAttribute("errors", blankErrors);
-            model.addAttribute("title", title);
-            model.addAttribute("description", description);
+            model.addAttribute("board", board);
             return "write";
         }
         boardService.insertBoard(board, user);
@@ -81,4 +86,42 @@ public class BoardController {
         return "redirect:/";
     }
 
+    @GetMapping("/board/update/{bid}")
+    String getChangePostPage(@PathVariable("bid") long bid, Model model,
+            HttpServletRequest httpServletRequest) {
+        BoardDTO board = boardService.getBoardById(bid);
+        HttpSession session = httpServletRequest.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (!boardService.isWriter(board, user)) {
+            model.addAttribute("errorMessage", "invaild board access");
+            return "error";
+        }
+        model.addAttribute("board", board);
+
+        return "changeboard";
+    }
+
+    @PostMapping("/board/update/{bid}")
+    String updatePost(@PathVariable("bid") long bid, Model model, String title, String description,
+            String writer, HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (!writer.equals(user.getName())) {
+            model.addAttribute("errorMessage", "invaild board access");
+            return "error";
+        }
+        BoardDTO board = BoardDTO.builder().bid(bid).title(title).description(description)
+                .writer(writer).build();
+        Map<String, Boolean> error = boardService.getBlankError(board);
+        if (!error.isEmpty()) {
+            model.addAttribute("errors", error);
+            model.addAttribute("board", board);
+            return "changeboard";
+        }
+        boardService.updateBoard(board);
+        BoardDTO updatedBoard = boardService.getBoardById(bid);
+        model.addAttribute("board", updatedBoard);
+        model.addAttribute("isWriter", true);
+        return "description";
+    }
 }

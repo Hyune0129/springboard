@@ -17,4 +17,6 @@ public interface BoardMapper {
     BoardDTO getBoardById(Long bid);
 
     void insertBoard(Map<String, Object> board);
+
+    void updateBoard(BoardDTO board);
 }

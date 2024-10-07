@@ -46,4 +46,15 @@ public class BoardService {
         boardMapper.insertBoard(boardInfo);
     }
 
+    public void updateBoard(BoardDTO board) {
+        boardMapper.updateBoard(board);
+    }
+
+    public boolean isWriter(BoardDTO board, UserDTO user) {
+        if (board == null || user == null) {
+            return false;
+        }
+        return board.getWriter().equals(user.getName());
+    }
+
 }
