@@ -2,6 +2,7 @@ package com.demo.springboard.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.List;
@@ -102,7 +103,7 @@ public class BoardMapperTest {
 
     @Test
     @Order(4)
-    void updateBoardTesr() throws Exception {
+    void updateBoardTest() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("writer", testUser.getUid());
         map.put("title", "testTitle1");
@@ -123,5 +124,31 @@ public class BoardMapperTest {
         BoardDTO changedBoard = boardMapper.getBoardById(testBoard.getBid());
         assertEquals("changedDescription", changedBoard.getDescription());
         assertEquals("changedTitle", changedBoard.getTitle());
+    }
+
+    @Test
+    @Order(5)
+    void deleteBoardByIdTest() throws Exception {
+        // insert board
+        Map<String, Object> map = new HashMap<>();
+        map.put("writer", testUser.getUid());
+        map.put("title", "testTitle1");
+        map.put("description", "boardTestDescription1");
+        boardMapper.insertBoard(map);
+
+        // get testboard uid
+        List<BoardDTO> boards = boardMapper.getBoards();
+        BoardDTO testBoard = null;
+        for (BoardDTO board : boards) {
+            if (board.getWriter().equals(testUser.getName())) { // dont get description
+                testBoard = boardMapper.getBoardById(board.getBid());
+                break;
+            }
+        }
+
+        // delete test
+        assertNotNull(testBoard);
+        boardMapper.deleteBoardById(testBoard.getBid());
+        assertNull(boardMapper.getBoardById(testBoard.getBid()));
     }
 }

@@ -19,5 +19,6 @@
         values(#{title}, #{writer}, #{description}) </insert>
     <update id="updateBoard" parameterType="com.demo.springboard.BoardDTO"> update board set title =
         #{title}, description = #{description} where bid = #{bid}</update>
+    <delete id="deleteBoardById"> delete from board where bid = #{bid} </delete>
 
 </mapper>

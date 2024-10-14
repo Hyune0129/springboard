@@ -124,4 +124,18 @@ public class BoardController {
         model.addAttribute("isWriter", true);
         return "description";
     }
+
+    @GetMapping("/board/delete/{bid}")
+    String deletePost(@PathVariable("bid") long bid, Model model,
+            HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        BoardDTO board = boardService.getBoardById(bid);
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (!boardService.isWriter(board, user)) {
+            model.addAttribute("error", "invaild access");
+            return "error";
+        }
+        boardService.deleteboardByBid(bid);
+        return "redirect:/";
+    }
 }

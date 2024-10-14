@@ -57,4 +57,8 @@ public class BoardService {
         return board.getWriter().equals(user.getName());
     }
 
+    public void deleteboardByBid(Long bid) {
+        boardMapper.deleteBoardById(bid);
+    }
+
 }

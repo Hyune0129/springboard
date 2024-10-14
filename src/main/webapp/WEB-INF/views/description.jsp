@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="ko">
 <head>
+    <script>
+        function deleteConfirm() {
+            if(confirm("delete board?")) {
+                alert("page deleted");
+                window.location.replace("/board/delete/${board.bid}");
+            }
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${board.title}</title>
@@ -24,7 +32,7 @@
         <c:if test="${isWriter}">
             <tr>
                 <td><a href="/board/update/${board.bid}">[update]</a></td>
-                <td><a href="/board/delete/${board.bid}">[delete]</a></td>
+                <td><input type="button" value="delete" onclick="deleteConfirm()"></td>
             </tr>
         </c:if>
     </table>

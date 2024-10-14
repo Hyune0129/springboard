@@ -19,4 +19,6 @@ public interface BoardMapper {
     void insertBoard(Map<String, Object> board);
 
     void updateBoard(BoardDTO board);
+
+    void deleteBoardById(Long bid);
 }
